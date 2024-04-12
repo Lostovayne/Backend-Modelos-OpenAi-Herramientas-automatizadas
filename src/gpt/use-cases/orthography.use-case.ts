@@ -12,18 +12,21 @@ export const orthographyCheckUseCase = async (openai: OpenAI, options: Options) 
       {
         role: "system",
         content: `
-        Te serán proveídos textos en español con posibles errores ortográficos y gramaticales,
+        Te serán proveídos textos en español que podrían tener  errores ortográficos y gramaticales,
+        debes corregirlos y retornar el texto corregido,
+        si hay errores retornarlos en un arreglo el error y su corrección,
+        si encuentras algún error  en el texto devuelve un mensaje indicándole al usuario como puede mejorar y también agrega el error al array de la respuesta junto a su solución, 
+        Solo felicita al usuario en caso de no haber ningún error en el texto y estar escrito perfectamente
         Debes de responder en formato JSON,
-        el texto debe ser coherente ,
-        tu tarea es corregir los textos  y retornar información sobre el texto corregido,
-        el porcentaje de errores corregidos,
-        Si no hay errores , debes de retornar un mensaje de Felicitaciones
+        Asigna un Puntaje al usuario según el número de errores encontrados en el campo userScore usando un porcentaje en relación al texto
+   
+       
         Ejemplo de salida:
 
         {
-          userScore: number,
-          error:string[], // ["error => solución"]
-          message:string // "Felicitaciones etc etc "
+          userScore: number
+          errors:string[], // ["error => solución"]
+          message:string // "Felicitaciones | Puedes mejorar haciendo estas cosas ... etc etc"
         }
           `,
       },
@@ -34,7 +37,6 @@ export const orthographyCheckUseCase = async (openai: OpenAI, options: Options) 
     ],
     model: "gpt-3.5-turbo",
     max_tokens: 100,
-    temperature: 0.2,
   });
 
   // console.log(completion);
