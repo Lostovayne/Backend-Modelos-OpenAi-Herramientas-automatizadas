@@ -22,8 +22,7 @@ export class GptController {
     @Body() prosConsDiscusserDto: ProsConsDiscusserDto,
     @Res() res: Response
   ) {
-    const stream =
-      await this.gptService.prosConstDiscusserStream(prosConsDiscusserDto);
+    const stream = await this.gptService.prosConstDiscusserStream(prosConsDiscusserDto);
 
     res.setHeader("Content-Type", "application/json");
     res.status(HttpStatus.OK);
