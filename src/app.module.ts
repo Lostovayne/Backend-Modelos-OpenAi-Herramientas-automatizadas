@@ -6,3 +6,6 @@ import { ConfigModule } from "@nestjs/config";
   imports: [GptModule, ConfigModule.forRoot()],
 })
 export class AppModule {}
+
+
+// xd 
